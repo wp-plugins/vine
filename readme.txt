@@ -3,7 +3,7 @@ Contributors: vine,niallkennedy
 Tags: vine, video, embed
 Requires at least: 3.7
 Tested up to: 4.1
-Stable tag: 1.0
+Stable tag: 1.0.0
 License: MIT
 License URI: http://opensource.org/licenses/MIT
 
@@ -19,7 +19,7 @@ The plugin automatically adjusts displayed Vine embeds to the content width of y
 
 == Changelog ==
 
-= 1.0 =
+= 1.0.0 =
 * Initial release
 
 == Frequently Asked Questions ==
