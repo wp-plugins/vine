@@ -1,13 +1,13 @@
 <?php
 /**
  * @package vine
- * @version 1.0.0
+ * @version 1.0.1
  */
 /*
 Plugin Name: Vine
 Plugin URI: https://vine.co/
-Description: Official Vine plugin for WordPress. Easily embed Vine videos by pasting a URL into your post editor.
-Version: 1.0.0
+Description: Official Vine plugin for WordPress. Easily embed Vine videos by pasting a URL into your post editor. Requires PHP 5.3 or greater.
+Version: 1.0.1
 Author: Vine
 Author URI: https://vine.co/
 License: MIT
@@ -48,9 +48,16 @@ if ( ! function_exists( 'add_action' ) ) {
 	exit( 'Hi there! I am a WordPress plugin requiring functions included with WordPress. I am not meant to be addressed directly.' );
 }
 
-// stop loading if PHP functions may fail
-if ( ! version_compare( phpversion(), '5.3.0', '>=' ) ) {
-	trigger_error( 'The Vine plugin for WordPress requires PHP 5.3 or newer' );
+// plugin requires PHP 5.3 or greater
+if ( version_compare( PHP_VERSION, '5.3.0', '<' ) ) {
+	if ( ! class_exists( 'Vine_CompatibilityNotice' ) ) {
+		require_once( dirname(__FILE__) . '/compatibility-notice.php' );
+	}
+
+	// possibly display a notice, trigger error
+	add_action( 'admin_init', array( 'Vine_CompatibilityNotice', 'adminInit' ) );
+
+	// stop execution of this file
 	return;
 }
 
@@ -58,7 +65,7 @@ require_once( dirname( __FILE__ ) . '/autoload.php' );
 
 add_action(
 	'plugins_loaded',
-	array( '\\Vine\\WordPress\\PluginLoader', 'init' ),
+	array( '\Vine\WordPress\PluginLoader', 'init' ),
 	1, // priority
 	0 // expected arguments
 );
